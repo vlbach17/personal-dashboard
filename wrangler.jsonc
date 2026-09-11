@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "personal-dashboard",
+  "compatibility_date": "2026-09-11",
+  "pages_build_output_dir": "dist"
+
+  // Fill in once Cloudflare D1 is provisioned (see docs/TASK_LIST.md):
+  // "d1_databases": [
+  //   { "binding": "DB", "database_name": "personal-dashboard", "database_id": "TODO" }
+  // ]
+
+  // Fill in once Cloudflare R2 is provisioned (if/when needed):
+  // "r2_buckets": [
+  //   { "binding": "FILES", "bucket_name": "personal-dashboard-files" }
+  // ]
+}

@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); if [ -n \"$CLAUDE_SESSION_END_HOOK_RUNNING\" ]; then exit 0; fi; transcript=$(printf '%s' \"$input\" | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);process.stdout.write(j.transcript_path||'')}catch(e){}})\"); if [ -z \"$transcript\" ] || [ ! -f \"$transcript\" ]; then exit 0; fi; today=$(date +%Y-%m-%d); mkdir -p docs .claude; CLAUDE_SESSION_END_HOOK_RUNNING=1 claude -p \"Read the session transcript at $transcript and do two things. First, identify the concrete file changes made during that session (files created, edited, or deleted) and briefly why; if there were any, append a new entry to docs/CHANGELOG.md (create it with a top-level '# Changelog' heading first if the file does not exist yet) under the heading '## $today session summary', as 2-6 concise bullet points. Second, review docs/TASK_LIST.md against what happened this session: check off any items ([ ] to [x]) that were completed, and add any new actionable to-do items that surfaced during the session but are not yet listed, filed under the most fitting existing section (or a new section if none fits). If a file needs no update, leave it untouched. Do not modify any file other than docs/CHANGELOG.md and docs/TASK_LIST.md.\" --permission-mode acceptEdits --allowedTools \"Read Edit Write\" >> \".claude/session-end-hook.log\" 2>&1",
+            "timeout": 240,
+            "async": true,
+            "statusMessage": "Updating docs/CHANGELOG.md and docs/TASK_LIST.md for this session..."
+          }
+        ]
+      }
+    ]
+  }
+}
