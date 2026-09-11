@@ -5,6 +5,7 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 ## 0. Decisions Needed Before/During Build
 
 - [x] Pick edit/delete interaction pattern — decided: edit icon, used consistently everywhere
+- [x] Pick color palette/design direction — decided 2026-09-11: stock Material Design 3 baseline palette ("Purple" seed) + Roboto, taken as-is; custom palette/personality deferred to a later pass (see `PRODUCT.md` Brand Commitments)
 - [ ] Pick PWA icon and short name
 - [ ] Scope the mechanism for Claude Code auto-logging project "where I left off" notes when a session ends without a manual note
 - [ ] Decide if Betta quick-log capture needs special handling once Bettabase moves off Supabase to Cloudflare
@@ -13,7 +14,8 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 
 - [x] Scaffold repo: Vite + React (frontend) + Cloudflare Pages Functions (backend), TypeScript, npm, Tailwind config, Phosphor icons
 - [x] Fill in `CLAUDE.md` Commands and Project Structure sections
-- [ ] Set up GitHub repo (remote + push) — local git initialized, not yet connected to a remote
+- [x] Write `PRODUCT.md` (Impeccable design-system product record: users, purpose, positioning, constraints, brand commitments)
+- [x] Set up GitHub repo (remote + push) — created `vlbach17/personal-dashboard` (private), pushed 2026-09-11
 - [ ] Connect repo to Cloudflare Pages
 - [ ] Provision Cloudflare D1 database, then fill in the `d1_databases` binding in `wrangler.jsonc`
 - [ ] Provision Cloudflare R2 bucket (if/when needed), then fill in the `r2_buckets` binding in `wrangler.jsonc`
@@ -24,6 +26,8 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 - [ ] Fill in `CLAUDE.md` Database and Conventions sections once the schema and code conventions exist
 
 ## 2. Core Screens
+
+Status: a static HTML design comp (stock Material 3, Roboto) covering Home, Habits, Capture, Projects, Guides, and Settings was built and layout-passed on 2026-09-11, pending your sign-off before it's carried into real React screens. Checkboxes below track the actual React implementation, not the comp.
 
 - [ ] Login (Cloudflare Access magic link)
 - [ ] Home / Right Now — today's habit checklist, active projects preview (1–3 cards), persistent floating quick-capture button, linked-apps cards/icons

@@ -12,6 +12,19 @@ dist
 dist-ssr
 *.local
 .wrangler
+*.tsbuildinfo
+
+# Local secrets (Vite env files, Wrangler Pages Functions local vars)
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+
+# Impeccable design-skill scratch output (screenshots, generated decision comps);
+# .impeccable/config.json itself stays tracked, config.local.json is per-machine
+.impeccable/config.local.json
+.impeccable/mocks/
+.impeccable/review/
 
 # Runtime log from the SessionEnd hook (.claude/settings.json)
 .claude/session-end-hook.log
@@ -21,6 +34,7 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj

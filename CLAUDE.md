@@ -22,7 +22,7 @@ A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, i
 - **CSS:** Tailwind
 - **Icons:** Phosphor
 - **Notifications:** Web push + Cloudflare Cron Triggers for scheduling
-- **Design system:** Material Design 3 (M3) principles (spacing, elevation, color roles, motion), while keeping Vanessa's own color palette/personality
+- **Design system:** Material Design 3 (M3) — structure (spacing, elevation, color roles, motion) *and* the stock M3 baseline palette/type (Roboto) for now, taken as-is. Custom color palette/personality is deferred to a later pass, not decided yet.
 - **Cost target:** $0/month under normal single-user use (free tiers on Pages, Workers, D1, R2, Access); set a Cloudflare spending alert on day one
 
 ## Commands
