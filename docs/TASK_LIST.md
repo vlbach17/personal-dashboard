@@ -9,6 +9,7 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 - [ ] Pick PWA icon and short name
 - [ ] Scope the mechanism for Claude Code auto-logging project "where I left off" notes when a session ends without a manual note
 - [ ] Decide if Betta quick-log capture needs special handling once Bettabase moves off Supabase to Cloudflare
+- [x] Evaluate the Subframe design tool/plugin — decided 2026-09-11: not adopting it for this project yet; tried designing the root dashboard page with it, backed out before any theme/page was created. Plugin was installed via `/plugin` and a Subframe cloud project ("Dashboard") was created holding only its default empty scaffold (no custom theme, pages, or components) — nothing was synced into this repo. The `subframe-testing` git branch used for the experiment had zero commits and was deleted, back on `master`. If the Subframe plugin still shows as connected, disconnect it via `/plugin`; the empty "Dashboard" project can optionally be deleted from the Subframe web app.
 
 ## 1. Project Setup
 
