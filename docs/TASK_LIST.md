@@ -5,7 +5,7 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 ## 0. Decisions Needed Before/During Build
 
 - [x] Pick edit/delete interaction pattern — decided: edit icon, used consistently everywhere
-- [x] Pick color palette/design direction — decided 2026-09-11: stock Material Design 3 baseline palette ("Purple" seed) + Roboto, taken as-is; custom palette/personality deferred to a later pass (see `PRODUCT.md` Brand Commitments)
+- [x] Pick color palette/design direction — decided 2026-09-11: stock Material Design 3 baseline palette ("Purple" seed) + Roboto, taken as-is; custom palette/personality deferred to a later pass. **Superseded 2026-09-12**: a full color/typography system (Zilla Slab + Courier Prime, halftone paper ground, safety-orange accent) was confirmed and implemented for Home — see `PRODUCT.md` Brand Commitments and `docs/brand/color_typography-design-style-guide_v1/`.
 - [ ] Pick PWA icon and short name
 - [ ] Scope the mechanism for Claude Code auto-logging project "where I left off" notes when a session ends without a manual note
 - [ ] Decide if Betta quick-log capture needs special handling once Bettabase moves off Supabase to Cloudflare
@@ -28,24 +28,24 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 
 ## 2. Core Screens
 
-Status: a static HTML design comp (stock Material 3, Roboto) covering Home, Habits, Capture, Projects, Guides, and Settings was built and layout-passed on 2026-09-11, pending your sign-off before it's carried into real React screens. Checkboxes below track the actual React implementation, not the comp.
+Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_typography-design-style-guide_v1/`) and all six screens are now built as real React/Tailwind components against it, extending the confirmed Home visual language (Zilla Slab/Courier Prime, halftone ground, rules not cards) into the previously-undesigned screens since that was an explicit ask, not an inference. Data lives in per-feature React contexts (`src/state/`) seeded from mock data (`src/data/`) — no backend wiring yet, that's tracked in section 1, so nothing persists across a reload. The earlier stock-Material-3 static HTML comp is superseded. Checkboxes below track real React implementation.
 
 - [ ] Login (Cloudflare Access magic link)
-- [ ] Home / Right Now — today's habit checklist, active projects preview (1–3 cards), persistent floating quick-capture button, linked-apps cards/icons
-- [ ] Habits — list, add, per-habit settings incl. reminder time
-- [ ] Capture — open input, reverse-chron list, convert-to-project action
-- [ ] Projects — Active / Someday tabs, detail view with running "where I left off" log
-- [ ] Guides — grid/list, add, filter/sort, detail/read view
-- [ ] Settings/Account — manage all habit reminder times, log out, manual backup/export trigger
-- [ ] Empty states for every list view (consistent, plain-language copy)
+- [x] Home / Right Now — today's habit checklist, active projects preview, persistent floating quick-capture button, shortcuts row (linked-out apps + the in-app Guides screen)
+- [x] Habits — list, inline add/edit/delete, schedule text per habit (shares `HabitsContext` with Home and Settings). No reminder *scheduling* (push/cron) is wired — that's section 6.
+- [x] Capture — open input, reverse-chron list, copy action, convert-to-project (marks the capture converted; doesn't yet create/link an actual project record — smart duplicate/related-topic detection is still unscoped, see section 4)
+- [x] Projects — Active / Someday tabs, inline add/edit/delete, detail view at `/projects/:id` with the full running "where I left off" log and an append-only entry form (shares `ProjectsContext` with Home)
+- [x] Guides — list (not a card grid — see Navigation note below) with category filter + newest/A–Z sort, inline add/edit/delete, detail/read view at `/guides/:id` (shares `GuidesContext`)
+- [x] Settings/Account — habit reminder *times* editable in place (shares `HabitsContext`); log out and manual backup/export are visually built but intentionally inert (Cloudflare Access and D1 aren't provisioned — see section 1)
+- [x] Empty states for every list view (consistent, plain-language copy: "No habits added yet," "Nothing captured yet," "No active projects," "No results found," etc.)
 - [ ] First-open/install flow guiding the user to add to home screen (needed for push notifications)
 
 ## 3. Navigation & Search
 
-- [ ] Mobile hamburger menu → sidebar
-- [ ] Desktop sidebar (per reference wireframe photo)
-- [ ] Shared search bar across habits, captures, projects, guides
-- [ ] Search empty state ("No results found")
+- [x] **Superseded 2026-09-12**: primary navigation is now a persistent bottom tab bar (`src/components/layout/BottomNav.tsx` — Home/Habits/Capture/Projects/Guides), not a hamburger + slide-out sidebar. Settings moved to a gear icon in the top strip since it isn't a daily-use screen. The quick-capture control is a separate, always-floating button (`QuickCaptureFab.tsx`) reachable from every screen except Capture itself, per CLAUDE.md. Same bar at every width — no distinct desktop composition yet (still ask before designing one; see below).
+- [ ] Desktop composition (per reference wireframe photo) — the photo still isn't in this repo; content is full-bleed/fluid at wide viewports for now. Ask before designing a distinct desktop layout.
+- [ ] Shared search bar across habits, captures, projects, guides — input is built and styled in the top strip but not wired to any results yet; results UI isn't designed
+- [ ] Search empty state ("No results found") — copy exists as a convention, not yet reachable from a real search
 
 ## 4. Feature Behavior
 
@@ -62,8 +62,8 @@ Status: a static HTML design comp (stock Material 3, Roboto) covering Home, Habi
 
 ## 5. Linked-Out Apps (not built in)
 
-- [ ] Add linked-app cards/icons for Markdown Press and DSM artifact tools
-- [ ] Add link to Spunk's Bettabase
+- [x] Icons built in Home's Shortcuts section per the confirmed comp (`src/components/home/ShortcutsSection.tsx`): BettaBase, "Dev Stack," Roadmap, and MD Press render but are inert — no URL for any of them is recorded anywhere in the repo, so don't wire one without asking. The fifth icon (KS Guide) is real and links to the in-app `/guides` screen.
+- [ ] Get and wire the actual URLs for Markdown Press, DSM artifact tools, and Bettabase once you have them
 - [ ] Once Bettabase migrates to Cloudflare: add a quick water-log shortcut from the floating capture button
 
 ## 6. Notifications & Scheduling

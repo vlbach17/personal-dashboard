@@ -1,9 +1,145 @@
 @import "tailwindcss";
 
+/*
+  Token source: docs/brand/color_typography-design-style-guide_v1/README.md
+  Raw values live on :root (unprefixed), dark values override the same names
+  under prefers-color-scheme, and @theme inline maps them into Tailwind's
+  color/font namespace so utilities like bg-ink / text-body / font-mono work
+  in both modes without duplicating values. No manual theme toggle exists yet
+  (Settings screen isn't built), so this follows the system setting only.
+*/
 :root {
+  --ink: #2e3a34;
+  --ink-grad-start: #3e4c44;
+  --ink-grad-end: #26312b;
+  --body: #55615a;
+  --label: #4a554e;
+  --data: #5e6b63;
+  --done: #6b786f;
+  --accent: #ff7a1a;
+  --accent-text: #b04a00;
+  --hairline: rgba(46, 58, 52, 0.18);
+
+  --ground-top: #f3ecec;
+  --ground-bottom: #e4dbde;
+  --ground-bloom: radial-gradient(
+    1000px 520px at 12% -10%,
+    rgba(255, 246, 236, 0.95),
+    rgba(255, 246, 236, 0) 62%
+  );
+  --ground-dot-fine: rgba(46, 58, 52, 0.11);
+  --ground-dot-coarse: rgba(46, 58, 52, 0.16);
+  --chrome-wash-top: linear-gradient(rgba(46, 58, 52, 0.05), rgba(46, 58, 52, 0));
+  --chrome-wash-bottom: linear-gradient(rgba(46, 58, 52, 0), rgba(46, 58, 52, 0.07));
+  --project-rule-inactive: rgba(46, 58, 52, 0.2);
+  --unchecked-icon: #7f8a83;
+  --ground-dye: radial-gradient(320px 220px at 8% 6%, rgba(255, 248, 240, 0.4), transparent 70%),
+    radial-gradient(380px 300px at 96% 24%, rgba(226, 206, 212, 0.34), transparent 68%),
+    radial-gradient(420px 280px at 20% 66%, rgba(238, 228, 216, 0.32), transparent 70%),
+    radial-gradient(340px 300px at 88% 94%, rgba(214, 200, 196, 0.28), transparent 72%);
+
+  --nav-height: 76px;
+
   color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #efe9ea;
+    --ink-grad-start: #fbf6f5;
+    --ink-grad-end: #cfc7ca;
+    --body: #b4beb8;
+    --label: #a8b3ac;
+    --data: #7e8b83;
+    --done: #8b978f;
+    --accent: #ff7a1a;
+    --accent-text: #ff7a1a;
+    --hairline: rgba(239, 233, 234, 0.16);
+
+    --ground-top: #252e24;
+    --ground-bottom: #191f18;
+    --ground-bloom: radial-gradient(
+      900px 480px at 88% -8%,
+      rgba(255, 122, 26, 0.12),
+      rgba(255, 122, 26, 0) 62%
+    );
+    --ground-dot-fine: rgba(239, 233, 234, 0.1);
+    --ground-dot-coarse: rgba(239, 233, 234, 0.14);
+    --chrome-wash-top: linear-gradient(rgba(239, 233, 234, 0.05), rgba(239, 233, 234, 0));
+    --chrome-wash-bottom: linear-gradient(rgba(239, 233, 234, 0), rgba(239, 233, 234, 0.07));
+    --project-rule-inactive: rgba(239, 233, 234, 0.18);
+    --unchecked-icon: #7e8b83;
+    --ground-dye: radial-gradient(340px 240px at 10% 6%, rgba(255, 122, 26, 0.09), transparent 68%),
+      radial-gradient(380px 300px at 94% 28%, rgba(74, 92, 80, 0.35), transparent 70%),
+      radial-gradient(400px 300px at 22% 72%, rgba(58, 68, 58, 0.35), transparent 72%);
+  }
+}
+
+@theme inline {
+  --font-sans: "Zilla Slab", Georgia, serif;
+  --font-mono: "Courier Prime", ui-monospace, monospace;
+
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-label: var(--label);
+  --color-data: var(--data);
+  --color-done: var(--done);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-hairline: var(--hairline);
+  --color-ground-top: var(--ground-top);
+  --color-ground-bottom: var(--ground-bottom);
 }
 
 body {
   margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+
+/* Ground: viewport-fixed halftone field (Style Guide 01). Rendered once at
+   the app shell, not per-screen, so the field holds still while content
+   scrolls. Dot alphas are intentionally low -- do not raise them. */
+.app-ground {
+  background-image: var(--ground-bloom), linear-gradient(var(--ground-top), var(--ground-bottom));
+  background-attachment: fixed;
+}
+
+.app-ground--dye {
+  background-image: var(--ground-dye), linear-gradient(var(--ground-top), var(--ground-bottom));
+}
+
+.app-ground__fine,
+.app-ground__coarse {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app-ground__fine {
+  background: radial-gradient(var(--ground-dot-fine) 0.5px, transparent 0.6px) 0 0 / 10px 10px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 58%);
+  mask-image: linear-gradient(to bottom, #000, transparent 58%);
+}
+
+.app-ground__coarse {
+  background: radial-gradient(var(--ground-dot-coarse) 1.3px, transparent 1.5px) 0 0 / 19px 19px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 42%, #000);
+  mask-image: linear-gradient(to bottom, transparent 42%, #000);
+}
+
+.text-ink-gradient {
+  background-image: linear-gradient(var(--ink-grad-start), var(--ink-grad-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.chrome-wash-top {
+  background-image: var(--chrome-wash-top);
+}
+
+.chrome-wash-bottom {
+  background-image: var(--chrome-wash-bottom);
 }

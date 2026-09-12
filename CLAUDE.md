@@ -22,7 +22,7 @@ A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, i
 - **CSS:** Tailwind
 - **Icons:** Phosphor
 - **Notifications:** Web push + Cloudflare Cron Triggers for scheduling
-- **Design system:** Material Design 3 (M3) — structure (spacing, elevation, color roles, motion) *and* the stock M3 baseline palette/type (Roboto) for now, taken as-is. Custom color palette/personality is deferred to a later pass, not decided yet.
+- **Design system:** confirmed 2026-09-12 (supersedes the earlier stock-M3-palette/Roboto placeholder) — Zilla Slab (reading) + Courier Prime (data/labels), halftone-dot paper ground (a second "dye" variant for long-reading surfaces), ink/body/accent color roles, `border-radius: 0` and no shadows ("rules, not cards"). M3 spacing/motion thinking still informs structure. Full spec: `docs/brand/color_typography-design-style-guide_v1/README.md`. Implemented: all six screens, the shared layout/token foundation (`src/index.css`, `src/components/layout/`), and per-feature state (`src/state/`). Desktop still has no distinct composition — content is fluid/full-bleed at wide viewports; ask before designing one.
 - **Cost target:** $0/month under normal single-user use (free tiers on Pages, Workers, D1, R2, Access); set a Cloudflare spending alert on day one
 
 ## Commands
@@ -56,9 +56,10 @@ A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, i
 
 ## Navigation
 
-- Mobile: hamburger menu opens as a sidebar
-- Desktop: sidebar per the reference wireframe photo
-- Search bar across all content (habits, captures, projects, guides) — one shared bar, not per-section
+- **Superseded 2026-09-12**: primary navigation is a persistent bottom tab bar (Home, Habits, Capture, Projects, Guides), not a hamburger + slide-out sidebar. Same bar at every width — no distinct desktop composition yet.
+- Settings sits behind a gear icon in the top strip instead, since it isn't a daily-use screen.
+- The quick-capture control is a separate, always-floating button reachable from every screen except Capture itself (per the "persistent floating quick-capture control" decision below).
+- Search bar across all content (habits, captures, projects, guides) — one shared bar, not per-section. Built and styled in the top strip; not wired to results yet.
 
 ## Key Behavior Decisions
 
