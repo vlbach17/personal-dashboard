@@ -11,6 +11,7 @@ export const mockProjects: Project[] = [
     id: "personal-dashboard",
     name: "Personal Dashboard",
     status: "active",
+    createdLabel: "3 Sep 2026",
     log: [
       { id: "pd-1", timestamp: "3 Sep", note: "Scaffolded the repo: Vite + React + TS, Cloudflare Pages Functions." },
       { id: "pd-2", timestamp: "Mon", note: "Wrote PRODUCT.md and locked the behavior decisions in CLAUDE.md." },
@@ -25,6 +26,7 @@ export const mockProjects: Project[] = [
     id: "bettabase-cloudflare",
     name: "Bettabase → Cloudflare",
     status: "active",
+    createdLabel: "5 Sep 2026",
     log: [
       { id: "bc-1", timestamp: "last week", note: "Decided to migrate off Supabase once the schema stabilizes." },
       { id: "bc-2", timestamp: "Tue", note: "Schema exported. Next: D1 import and rewrite the water-log endpoint." },
@@ -34,12 +36,14 @@ export const mockProjects: Project[] = [
     id: "kingshot-guide-rewrite",
     name: "Kingshot guide rewrite",
     status: "someday",
+    createdLabel: "30 Aug 2026",
     log: [{ id: "kg-1", timestamp: "2 weeks ago", note: "Old notes are scattered across three apps — worth consolidating whenever there's a slow week." }],
   },
   {
     id: "portfolio-css-project",
     name: "DIY CSS portfolio piece",
     status: "someday",
+    createdLabel: "23 Aug 2026",
     log: [{ id: "pc-1", timestamp: "3 weeks ago", note: "Idea: build a small CSS-only toy to show off in the portfolio. No rush." }],
   },
 ];

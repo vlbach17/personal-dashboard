@@ -2,11 +2,14 @@
 
 /*
   Token source: docs/brand/color_typography-design-style-guide_v1/README.md
-  Raw values live on :root (unprefixed), dark values override the same names
-  under prefers-color-scheme, and @theme inline maps them into Tailwind's
-  color/font namespace so utilities like bg-ink / text-body / font-mono work
-  in both modes without duplicating values. No manual theme toggle exists yet
-  (Settings screen isn't built), so this follows the system setting only.
+  Raw values live on :root (unprefixed), dark values override the same names,
+  and @theme inline maps them into Tailwind's color/font namespace so
+  utilities like bg-ink / text-body / font-mono work in both modes without
+  duplicating values. Three ways a page can end up in dark mode, all applying
+  the same overrides: OS preference (prefers-color-scheme, unless a manual
+  choice says otherwise), a manual [data-theme="dark"] from Settings ->
+  Appearance (ThemeContext), or the pre-paint inline script in index.html
+  that mirrors the stored choice before React mounts to avoid a flash.
 */
 :root {
   --ink: #2e3a34;
@@ -44,7 +47,8 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  /* :not([data-theme="light"]) lets a manual Light choice hold even when the OS is dark. */
+  :root:not([data-theme="light"]) {
     --ink: #efe9ea;
     --ink-grad-start: #fbf6f5;
     --ink-grad-end: #cfc7ca;
@@ -73,6 +77,38 @@
       radial-gradient(380px 300px at 94% 28%, rgba(74, 92, 80, 0.35), transparent 70%),
       radial-gradient(400px 300px at 22% 72%, rgba(58, 68, 58, 0.35), transparent 72%);
   }
+}
+
+/* Manual override (Settings -> Appearance) wins regardless of OS preference. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #efe9ea;
+  --ink-grad-start: #fbf6f5;
+  --ink-grad-end: #cfc7ca;
+  --body: #b4beb8;
+  --label: #a8b3ac;
+  --data: #7e8b83;
+  --done: #8b978f;
+  --accent: #ff7a1a;
+  --accent-text: #ff7a1a;
+  --hairline: rgba(239, 233, 234, 0.16);
+
+  --ground-top: #252e24;
+  --ground-bottom: #191f18;
+  --ground-bloom: radial-gradient(900px 480px at 88% -8%, rgba(255, 122, 26, 0.12), rgba(255, 122, 26, 0) 62%);
+  --ground-dot-fine: rgba(239, 233, 234, 0.1);
+  --ground-dot-coarse: rgba(239, 233, 234, 0.14);
+  --chrome-wash-top: linear-gradient(rgba(239, 233, 234, 0.05), rgba(239, 233, 234, 0));
+  --chrome-wash-bottom: linear-gradient(rgba(239, 233, 234, 0), rgba(239, 233, 234, 0.07));
+  --project-rule-inactive: rgba(239, 233, 234, 0.18);
+  --unchecked-icon: #7e8b83;
+  --ground-dye: radial-gradient(340px 240px at 10% 6%, rgba(255, 122, 26, 0.09), transparent 68%),
+    radial-gradient(380px 300px at 94% 28%, rgba(74, 92, 80, 0.35), transparent 70%),
+    radial-gradient(400px 300px at 22% 72%, rgba(58, 68, 58, 0.35), transparent 72%);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
 }
 
 @theme inline {

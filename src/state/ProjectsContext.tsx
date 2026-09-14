@@ -4,7 +4,7 @@ import { mockProjects } from "../data/mockProjects";
 
 interface ProjectsContextValue {
   projects: Project[];
-  addProject: (name: string, status: Project["status"]) => void;
+  addProject: (name: string, status: Project["status"]) => Project;
   updateProject: (id: string, patch: Partial<Pick<Project, "name" | "status">>) => void;
   deleteProject: (id: string) => void;
   appendLogEntry: (id: string, note: string) => void;
@@ -20,8 +20,11 @@ function makeId(prefix: string) {
 export function ProjectsProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<Project[]>(mockProjects);
 
+  /** Returns the created project so callers (e.g. converting a capture) can link straight to its id. */
   function addProject(name: string, status: Project["status"]) {
-    setProjects((current) => [{ id: makeId("project"), name, status, log: [] }, ...current]);
+    const project: Project = { id: makeId("project"), name, status, createdLabel: "just now", log: [] };
+    setProjects((current) => [project, ...current]);
+    return project;
   }
 
   function updateProject(id: string, patch: Partial<Pick<Project, "name" | "status">>) {

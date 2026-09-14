@@ -9,6 +9,8 @@ export interface Project {
   id: string;
   name: string;
   status: "active" | "someday";
+  /** Display string, e.g. "3 Sep 2026" -- fixed, unlike the relative log/capture timestamps. */
+  createdLabel: string;
   /** Append-only "where I left off" log, oldest first. Never overwritten -- only appended to. */
   log: ProjectLogEntry[];
 }

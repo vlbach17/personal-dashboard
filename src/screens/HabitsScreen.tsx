@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Plus, Trash, X } from "@phosphor-icons/react";
-import { PencilSimple } from "@phosphor-icons/react";
+import { Plus, TrashSimpleIcon, X, FloppyDiskIcon } from "@phosphor-icons/react";
+import { PencilIcon } from "@phosphor-icons/react";
 import { useHabits } from "../state/HabitsContext";
 import type { Habit } from "../types/habit";
 
@@ -64,7 +64,7 @@ export function HabitsScreen() {
                 }}
                 className="mt-2 flex items-center gap-1.5 font-mono text-xs text-accent-text"
               >
-                <Trash size={14} /> Delete
+                <TrashSimpleIcon size={14} weight="duotone" /> Delete
               </button>
             </li>
           ) : (
@@ -77,7 +77,7 @@ export function HabitsScreen() {
                 aria-label={`Edit ${habit.label}`}
                 className="shrink-0 text-ink"
               >
-                <PencilSimple size={18} />
+                <PencilIcon size={18} weight="duotone" />
               </button>
             </li>
           ),
@@ -99,7 +99,7 @@ export function HabitsScreen() {
           className="flex min-h-12 items-center gap-3.5 border-b border-hairline py-3.5 text-left"
         >
           <Plus size={17} weight="bold" className="text-accent" />
-          <span className="text-[18px] leading-[23px] text-ink">Add habit</span>
+          <span className="text-[18px] leading-[23px] text-ink">New habit</span>
         </button>
       )}
     </div>
@@ -138,6 +138,7 @@ function HabitEditForm({
       />
       <div className="flex items-center gap-4">
         <button type="button" onClick={onSave} className="font-mono text-xs text-accent-text">
+          <FloppyDiskIcon size={14} weight="duotone" />
           {isNew ? "Add" : "Save"}
         </button>
         <button type="button" onClick={onCancel} className="flex items-center gap-1 font-mono text-xs text-label">

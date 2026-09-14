@@ -21,7 +21,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Primary"
-      className="chrome-wash-bottom fixed inset-x-0 bottom-0 z-30 flex items-center justify-between border-t-2 border-ink px-[26px] pt-3"
+      className="bg-ground-bottom fixed inset-x-0 bottom-0 z-30 flex items-center justify-between border-t-2 border-ink px-[26px] pt-3"
       style={{ height: "var(--nav-height)", paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}
     >
       {TABS.map(({ to, label, icon: Icon, end }) => (

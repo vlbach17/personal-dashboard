@@ -1,7 +1,6 @@
 import { Masthead } from "../components/home/Masthead";
 import { HabitsSection } from "../components/home/HabitsSection";
 import { ProjectsSection } from "../components/home/ProjectsSection";
-import { ShortcutsSection } from "../components/home/ShortcutsSection";
 import { useHabits } from "../state/HabitsContext";
 import { useProjects } from "../state/ProjectsContext";
 
@@ -15,7 +14,6 @@ export function HomeScreen() {
       <Masthead />
       <HabitsSection habits={habits} onToggle={toggleDoneToday} />
       <ProjectsSection projects={activeProjects} />
-      <ShortcutsSection />
     </div>
   );
 }

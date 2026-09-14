@@ -17,7 +17,8 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 - [x] Fill in `CLAUDE.md` Commands and Project Structure sections
 - [x] Write `PRODUCT.md` (Impeccable design-system product record: users, purpose, positioning, constraints, brand commitments)
 - [x] Set up GitHub repo (remote + push) — created `vlbach17/personal-dashboard` (private), pushed 2026-09-11
-- [ ] Connect repo to Cloudflare Pages
+- [ ] Connect repo to Cloudflare Pages — **gotcha (2026-09-13):** the dashboard's unified Workers & Pages "Connect to Git" flow can default the project's **Deploy command** to `npx wrangler deploy` (the Workers command), which fails on a Pages project with "Missing entry-point to Worker script or to assets directory" even though the build step succeeds. Fix in Settings → Builds & deployments → Deploy command: use `npx wrangler pages deploy dist` instead (matches the repo's own `npm run deploy`). Check this setting first if a future reconnect fails the same way.
+- [ ] **Unresolved blocker (2026-09-13):** after fixing the deploy command above, the deploy step now fails with `Authentication error [code: 10000]` — the project's `CLOUDFLARE_API_TOKEN` environment variable (a User API Token) lacks Cloudflare Pages permission, even though the account itself is Super Administrator. Next step: either remove the manually-set `CLOUDFLARE_API_TOKEN` project env var and retry (Cloudflare's git-connected Pages builds may auto-provision their own scoped deploy credentials, making a manual token unnecessary/wrong), or if a manual token is required, recreate it at dash.cloudflare.com/profile/api-tokens with **Account → Cloudflare Pages → Edit** permission and update the env var as a Secret.
 - [ ] Provision Cloudflare D1 database, then fill in the `d1_databases` binding in `wrangler.jsonc`
 - [ ] Provision Cloudflare R2 bucket (if/when needed), then fill in the `r2_buckets` binding in `wrangler.jsonc`
 - [ ] Configure Cloudflare Access (magic link auth, persistent session)
@@ -31,10 +32,10 @@ Derived from `personal-dashboard-plan.md` and `CLAUDE.md`. Update as decisions a
 Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_typography-design-style-guide_v1/`) and all six screens are now built as real React/Tailwind components against it, extending the confirmed Home visual language (Zilla Slab/Courier Prime, halftone ground, rules not cards) into the previously-undesigned screens since that was an explicit ask, not an inference. Data lives in per-feature React contexts (`src/state/`) seeded from mock data (`src/data/`) — no backend wiring yet, that's tracked in section 1, so nothing persists across a reload. The earlier stock-Material-3 static HTML comp is superseded. Checkboxes below track real React implementation.
 
 - [ ] Login (Cloudflare Access magic link)
-- [x] Home / Right Now — today's habit checklist, active projects preview, persistent floating quick-capture button, shortcuts row (linked-out apps + the in-app Guides screen)
+- [x] Home / Right Now — today's habit checklist, active projects preview, persistent floating quick-capture button. **Updated 2026-09-13**: the shortcuts row (linked-out apps + Guides icon) was removed per explicit user decision — see section 5
 - [x] Habits — list, inline add/edit/delete, schedule text per habit (shares `HabitsContext` with Home and Settings). No reminder *scheduling* (push/cron) is wired — that's section 6.
-- [x] Capture — open input, reverse-chron list, copy action, convert-to-project (marks the capture converted; doesn't yet create/link an actual project record — smart duplicate/related-topic detection is still unscoped, see section 4)
-- [x] Projects — Active / Someday tabs, inline add/edit/delete, detail view at `/projects/:id` with the full running "where I left off" log and an append-only entry form (shares `ProjectsContext` with Home)
+- [x] Capture — open input, reverse-chron list, copy action, convert-to-project. **Updated 2026-09-13**: conversion now actually creates and links a real project via the new `CapturesContext` (`Capture.projectId`), not just a flag — smart duplicate/related-topic detection is still unscoped, see section 4
+- [x] Projects — Active / Someday tabs, inline add/edit/delete, detail view at `/projects/:id` with the full running "where I left off" log and an append-only entry form (shares `ProjectsContext` with Home). **Updated 2026-09-13**: detail view now also shows a "Created {date}" line and merges the log with any originating capture into one reverse-chron History section (tagged "from capture")
 - [x] Guides — list (not a card grid — see Navigation note below) with category filter + newest/A–Z sort, inline add/edit/delete, detail/read view at `/guides/:id` (shares `GuidesContext`)
 - [x] Settings/Account — habit reminder *times* editable in place (shares `HabitsContext`); log out and manual backup/export are visually built but intentionally inert (Cloudflare Access and D1 aren't provisioned — see section 1)
 - [x] Empty states for every list view (consistent, plain-language copy: "No habits added yet," "Nothing captured yet," "No active projects," "No results found," etc.)
@@ -62,7 +63,7 @@ Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_
 
 ## 5. Linked-Out Apps (not built in)
 
-- [x] Icons built in Home's Shortcuts section per the confirmed comp (`src/components/home/ShortcutsSection.tsx`): BettaBase, "Dev Stack," Roadmap, and MD Press render but are inert — no URL for any of them is recorded anywhere in the repo, so don't wire one without asking. The fifth icon (KS Guide) is real and links to the in-app `/guides` screen.
+- [x] **Removed 2026-09-13**: the Home shortcuts icon row (BettaBase, "Dev Stack," Roadmap, MD Press, KS Guide) was cut entirely per explicit user decision ("this component will not be used") — `src/components/home/ShortcutsSection.tsx` was deleted and its usage removed from `HomeScreen.tsx`. Do not re-add without asking.
 - [ ] Get and wire the actual URLs for Markdown Press, DSM artifact tools, and Bettabase once you have them
 - [ ] Once Bettabase migrates to Cloudflare: add a quick water-log shortcut from the floating capture button
 

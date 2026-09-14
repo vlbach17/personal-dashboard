@@ -46,7 +46,7 @@ A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, i
 ## Screens
 
 - Login (Cloudflare Access magic link)
-- Home / Right Now — today's habit checklist, active projects preview (1–3 cards: name + last resume note), persistent floating quick-capture button, linked-apps cards/icons
+- Home / Right Now — today's habit checklist, active projects preview (1–3 cards: name + last resume note), persistent floating quick-capture button
 - Habits (list + add + per-habit settings incl. reminder time)
 - Capture (input + reverse-chron list of past captures; convert-to-project action)
 - Projects (Active / Someday tabs; detail view with running "where I left off" log)

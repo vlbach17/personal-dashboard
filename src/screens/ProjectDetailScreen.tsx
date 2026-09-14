@@ -1,12 +1,22 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft } from "@phosphor-icons/react";
+import { ArrowLeft, FolderSimple } from "@phosphor-icons/react";
 import { useProjects } from "../state/ProjectsContext";
+import { useCaptures } from "../state/CapturesContext";
+import { SectionLabel } from "../components/layout/SectionLabel";
+
+interface HistoryItem {
+  id: string;
+  timestamp: string;
+  note: string;
+  origin: "capture" | "log";
+}
 
 /** Long-reading surface -- rendered on Ground variant B (halftone over dye) via AppShell's route match. */
 export function ProjectDetailScreen() {
   const { id } = useParams();
   const { projects, appendLogEntry } = useProjects();
+  const { captures } = useCaptures();
   const [note, setNote] = useState("");
   const project = projects.find((p) => p.id === id);
 
@@ -21,7 +31,22 @@ export function ProjectDetailScreen() {
     );
   }
 
-  const entriesNewestFirst = [...project.log].reverse();
+  /**
+   * A project's history is its originating capture(s), if any, followed by
+   * its own append-only "where I left off" log -- one merged reverse-chron
+   * timeline. Captures precede the log chronologically (they're what started
+   * the project), so they're listed first here and land last once reversed.
+   */
+  const originCaptures: HistoryItem[] = captures
+    .filter((capture) => capture.projectId === project.id)
+    .map((capture) => ({ id: capture.id, timestamp: capture.createdAtLabel, note: capture.text, origin: "capture" }));
+  const logHistory: HistoryItem[] = project.log.map((entry) => ({
+    id: entry.id,
+    timestamp: entry.timestamp,
+    note: entry.note,
+    origin: "log",
+  }));
+  const historyNewestFirst = [...originCaptures, ...logHistory].reverse();
 
   function submitEntry() {
     if (!project) return;
@@ -43,6 +68,9 @@ export function ProjectDetailScreen() {
           {project.status === "active" ? "Active" : "Someday"}
         </span>
       </div>
+      <div className="mt-1.5">
+        <SectionLabel>Created {project.createdLabel}</SectionLabel>
+      </div>
 
       <div className="mt-[26px] border-b border-hairline pb-3">
         <textarea
@@ -57,14 +85,25 @@ export function ProjectDetailScreen() {
         </button>
       </div>
 
-      {entriesNewestFirst.length === 0 ? (
-        <p className="mt-[26px] text-[18px] text-body">No log entries yet.</p>
+      <div className="mt-[34px]">
+        <SectionLabel>History</SectionLabel>
+      </div>
+
+      {historyNewestFirst.length === 0 ? (
+        <p className="mt-3.5 text-[18px] text-body">No history yet.</p>
       ) : (
-        <ul className="mt-[8px]">
-          {entriesNewestFirst.map((entry) => (
-            <li key={entry.id} className="border-b border-hairline py-3.5">
-              <span className="font-mono text-xs text-data">{entry.timestamp}</span>
-              <p className="mt-1 text-[15px] leading-[23px] text-pretty text-body">{entry.note}</p>
+        <ul className="mt-3.5">
+          {historyNewestFirst.map((item) => (
+            <li key={item.id} className="border-b border-hairline py-3.5">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs text-data">{item.timestamp}</span>
+                {item.origin === "capture" && (
+                  <span className="flex items-center gap-1 font-mono text-xs text-label">
+                    <FolderSimple size={12} /> from capture
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 text-[15px] leading-[23px] text-pretty text-body">{item.note}</p>
             </li>
           ))}
         </ul>

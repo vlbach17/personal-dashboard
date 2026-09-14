@@ -1,21 +1,20 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Copy, FolderSimple, PencilSimple, Trash, X } from "@phosphor-icons/react";
-import { mockCaptures } from "../data/mockCaptures";
+import { useCaptures } from "../state/CapturesContext";
+import { useProjects } from "../state/ProjectsContext";
 import type { Capture } from "../types/capture";
-
-function makeId() {
-  return `capture-${Math.random().toString(36).slice(2, 9)}`;
-}
 
 /**
  * One open input, no forced categories -- as fast as a sticky note. Smart
  * duplicate/related-topic detection on convert-to-project is flagged in
- * CLAUDE.md as "a real feature to scope," not a trivial add, so convert here
- * only marks the capture as converted; it doesn't create or link an actual
- * project (there's no shared store across screens yet -- see Home/Projects).
+ * CLAUDE.md as "a real feature to scope," not a trivial add -- convert here
+ * just creates a new active project from the capture's own text and links
+ * the two, with no matching against existing projects yet.
  */
 export function CaptureScreen() {
-  const [captures, setCaptures] = useState<Capture[]>(mockCaptures);
+  const { captures, addCapture, updateCapture, deleteCapture, linkToProject } = useCaptures();
+  const { addProject } = useProjects();
   const [draftText, setDraftText] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
@@ -24,10 +23,7 @@ export function CaptureScreen() {
   function submitCapture() {
     const text = draftText.trim();
     if (!text) return;
-    setCaptures((current) => [
-      { id: makeId(), text, createdAtLabel: "just now", convertedToProject: false },
-      ...current,
-    ]);
+    addCapture(text);
     setDraftText("");
   }
 
@@ -37,8 +33,9 @@ export function CaptureScreen() {
     setTimeout(() => setCopiedId((current) => (current === capture.id ? null : current)), 1500);
   }
 
-  function convertCapture(id: string) {
-    setCaptures((current) => current.map((c) => (c.id === id ? { ...c, convertedToProject: true } : c)));
+  function convertCapture(capture: Capture) {
+    const project = addProject(capture.text, "active");
+    linkToProject(capture.id, project.id);
   }
 
   function startEdit(capture: Capture) {
@@ -47,15 +44,13 @@ export function CaptureScreen() {
   }
 
   function saveEdit() {
-    if (!editText.trim()) return;
-    setCaptures((current) =>
-      current.map((c) => (c.id === editingId ? { ...c, text: editText.trim() } : c)),
-    );
+    if (!editText.trim() || !editingId) return;
+    updateCapture(editingId, editText.trim());
     setEditingId(null);
   }
 
-  function deleteCapture(id: string) {
-    setCaptures((current) => current.filter((c) => c.id !== id));
+  function removeCapture(id: string) {
+    deleteCapture(id);
     setEditingId(null);
   }
 
@@ -110,7 +105,7 @@ export function CaptureScreen() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => deleteCapture(capture.id)}
+                      onClick={() => removeCapture(capture.id)}
                       className="ml-auto flex items-center gap-1.5 font-mono text-xs text-accent-text"
                     >
                       <Trash size={14} /> Delete
@@ -121,17 +116,20 @@ export function CaptureScreen() {
                 <>
                   <p
                     className={`text-[15px] leading-[23px] text-pretty ${
-                      capture.convertedToProject ? "text-done line-through decoration-2 decoration-accent" : "text-body"
+                      capture.projectId ? "text-done line-through decoration-2 decoration-accent" : "text-body"
                     }`}
                   >
                     {capture.text}
                   </p>
                   <div className="mt-2 flex items-center gap-4">
                     <span className="font-mono text-xs text-data">{capture.createdAtLabel}</span>
-                    {capture.convertedToProject ? (
-                      <span className="flex items-center gap-1 font-mono text-xs text-accent-text">
+                    {capture.projectId ? (
+                      <Link
+                        to={`/projects/${capture.projectId}`}
+                        className="flex items-center gap-1 font-mono text-xs text-accent-text"
+                      >
                         <FolderSimple size={14} /> converted
-                      </span>
+                      </Link>
                     ) : (
                       <>
                         <button
@@ -143,7 +141,7 @@ export function CaptureScreen() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => convertCapture(capture.id)}
+                          onClick={() => convertCapture(capture)}
                           className="flex items-center gap-1 font-mono text-xs text-label"
                         >
                           <FolderSimple size={14} /> to project

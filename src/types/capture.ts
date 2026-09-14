@@ -3,5 +3,6 @@ export interface Capture {
   text: string;
   /** Display string, e.g. "2h ago", "Yesterday". */
   createdAtLabel: string;
-  convertedToProject: boolean;
+  /** Set once this capture is converted -- the project it became. Never both a capture and unlinked. */
+  projectId: string | null;
 }
