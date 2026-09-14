@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Copy, FolderSimple, PencilSimple, Trash, X } from "@phosphor-icons/react";
+import {
+  CopyIcon,
+  ShareIcon,
+  PencilSimpleIcon,
+  TrashSimpleIcon,
+  ProhibitIcon,
+  FloppyDiskIcon,
+  PlusCircleIcon,
+} from "@phosphor-icons/react";
 import { useCaptures } from "../state/CapturesContext";
 import { useProjects } from "../state/ProjectsContext";
 import type { Capture } from "../types/capture";
@@ -70,10 +78,15 @@ export function CaptureScreen() {
           }}
           placeholder="Capture a thought…"
           rows={2}
-          className="w-full resize-none bg-transparent text-[18px] leading-[23px] text-ink placeholder:text-label focus:outline-none"
+          className="field-input w-full resize-none text-[18px] leading-[23px] text-ink"
         />
-        <button type="button" onClick={submitCapture} className="mt-2 font-mono text-xs text-accent-text">
-          Capture
+        <button
+          type="button"
+          onClick={submitCapture}
+          aria-label="Add capture"
+          className="mt-2 font-mono text-xs text-accent-text"
+        >
+          <PlusCircleIcon size={22} weight="fill" />
         </button>
       </div>
 
@@ -90,25 +103,32 @@ export function CaptureScreen() {
                     value={editText}
                     onChange={(event) => setEditText(event.target.value)}
                     rows={2}
-                    className="w-full resize-none border-b border-hairline bg-transparent text-[15px] leading-[23px] text-body focus:border-ink focus:outline-none"
+                    className="field-input w-full resize-none text-[15px] leading-[23px] text-body"
                   />
                   <div className="flex items-center gap-4">
-                    <button type="button" onClick={saveEdit} className="font-mono text-xs text-accent-text">
-                      Save
+                    <button
+                      type="button"
+                      onClick={saveEdit}
+                      aria-label="Save capture"
+                      className="font-mono text-xs text-accent-text"
+                    >
+                      <FloppyDiskIcon size={22} weight="duotone" />
                     </button>
                     <button
                       type="button"
                       onClick={() => setEditingId(null)}
+                      aria-label="Cancel"
                       className="flex items-center gap-1 font-mono text-xs text-label"
                     >
-                      <X size={12} /> Cancel
+                      <ProhibitIcon size={22} weight="duotone" />
                     </button>
                     <button
                       type="button"
                       onClick={() => removeCapture(capture.id)}
+                      aria-label="Delete capture"
                       className="ml-auto flex items-center gap-1.5 font-mono text-xs text-accent-text"
                     >
-                      <Trash size={14} /> Delete
+                      <TrashSimpleIcon size={22} weight="duotone" />
                     </button>
                   </div>
                 </div>
@@ -126,25 +146,29 @@ export function CaptureScreen() {
                     {capture.projectId ? (
                       <Link
                         to={`/projects/${capture.projectId}`}
+                        aria-label="Converted to project"
+                        title="Converted to project"
                         className="flex items-center gap-1 font-mono text-xs text-accent-text"
                       >
-                        <FolderSimple size={14} /> converted
+                        <ShareIcon size={22} weight="duotone" />
                       </Link>
                     ) : (
                       <>
                         <button
                           type="button"
                           onClick={() => copyCapture(capture)}
+                          aria-label={copiedId === capture.id ? "Copied" : "Copy"}
                           className="flex items-center gap-1 font-mono text-xs text-label"
                         >
-                          <Copy size={14} /> {copiedId === capture.id ? "copied" : "copy"}
+                          <CopyIcon size={22} weight="duotone" />
                         </button>
                         <button
                           type="button"
                           onClick={() => convertCapture(capture)}
+                          aria-label="Convert to project"
                           className="flex items-center gap-1 font-mono text-xs text-label"
                         >
-                          <FolderSimple size={14} /> to project
+                          <ShareIcon size={22} weight="duotone" />
                         </button>
                         <button
                           type="button"
@@ -152,7 +176,7 @@ export function CaptureScreen() {
                           aria-label="Edit capture"
                           className="ml-auto text-ink"
                         >
-                          <PencilSimple size={16} />
+                          <PencilSimpleIcon size={22} weight="duotone" />
                         </button>
                       </>
                     )}

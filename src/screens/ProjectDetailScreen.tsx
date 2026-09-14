@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, FolderSimple } from "@phosphor-icons/react";
+import { ArrowLeftIcon, FolderSimpleIcon, PlusCircleIcon } from "@phosphor-icons/react";
 import { useProjects } from "../state/ProjectsContext";
 import { useCaptures } from "../state/CapturesContext";
 import { SectionLabel } from "../components/layout/SectionLabel";
@@ -23,8 +23,13 @@ export function ProjectDetailScreen() {
   if (!project) {
     return (
       <div className="flex flex-1 flex-col px-[26px] pt-[26px]">
-        <Link to="/projects" className="flex items-center gap-1.5 font-mono text-xs text-label">
-          <ArrowLeft size={14} /> Projects
+        <Link
+          to="/projects"
+          aria-label="Back to Projects"
+          title="Projects"
+          className="flex items-center gap-1.5 font-mono text-xs text-label"
+        >
+          <ArrowLeftIcon size={22} weight="duotone" />
         </Link>
         <p className="mt-[34px] text-[18px] text-body">This project no longer exists.</p>
       </div>
@@ -58,8 +63,13 @@ export function ProjectDetailScreen() {
 
   return (
     <div className="flex flex-1 flex-col px-[26px] pt-[26px]">
-      <Link to="/projects" className="flex w-fit items-center gap-1.5 font-mono text-xs text-label">
-        <ArrowLeft size={14} /> Projects
+      <Link
+        to="/projects"
+        aria-label="Back to Projects"
+        title="Projects"
+        className="flex w-fit items-center gap-1.5 font-mono text-xs text-label"
+      >
+        <ArrowLeftIcon size={22} weight="duotone" />
       </Link>
 
       <div className="mt-[18px] flex items-baseline gap-3">
@@ -78,10 +88,15 @@ export function ProjectDetailScreen() {
           onChange={(event) => setNote(event.target.value)}
           placeholder="Where did you leave off?"
           rows={2}
-          className="w-full resize-none bg-transparent text-[15px] leading-[23px] text-ink placeholder:text-label focus:outline-none"
+          className="field-input w-full resize-none text-[15px] leading-[23px] text-ink"
         />
-        <button type="button" onClick={submitEntry} className="mt-2 font-mono text-xs text-accent-text">
-          Add entry
+        <button
+          type="button"
+          onClick={submitEntry}
+          aria-label="Add entry"
+          className="mt-2 font-mono text-xs text-accent-text"
+        >
+          <PlusCircleIcon size={22} weight="fill" /> 
         </button>
       </div>
 
@@ -99,7 +114,7 @@ export function ProjectDetailScreen() {
                 <span className="font-mono text-xs text-data">{item.timestamp}</span>
                 {item.origin === "capture" && (
                   <span className="flex items-center gap-1 font-mono text-xs text-label">
-                    <FolderSimple size={12} /> from capture
+                    <FolderSimpleIcon size={22} weight="duotone" /> from capture
                   </span>
                 )}
               </div>

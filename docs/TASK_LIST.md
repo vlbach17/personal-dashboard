@@ -37,7 +37,7 @@ Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_
 - [x] Capture — open input, reverse-chron list, copy action, convert-to-project. **Updated 2026-09-13**: conversion now actually creates and links a real project via the new `CapturesContext` (`Capture.projectId`), not just a flag — smart duplicate/related-topic detection is still unscoped, see section 4
 - [x] Projects — Active / Someday tabs, inline add/edit/delete, detail view at `/projects/:id` with the full running "where I left off" log and an append-only entry form (shares `ProjectsContext` with Home). **Updated 2026-09-13**: detail view now also shows a "Created {date}" line and merges the log with any originating capture into one reverse-chron History section (tagged "from capture")
 - [x] Guides — list (not a card grid — see Navigation note below) with category filter + newest/A–Z sort, inline add/edit/delete, detail/read view at `/guides/:id` (shares `GuidesContext`)
-- [x] Settings/Account — habit reminder *times* editable in place (shares `HabitsContext`); log out and manual backup/export are visually built but intentionally inert (Cloudflare Access and D1 aren't provisioned — see section 1)
+- [x] Settings/Account — habit reminder *times* editable in place (shares `HabitsContext`); log out and manual backup/export are visually built but intentionally inert (Cloudflare Access and D1 aren't provisioned — see section 1). **Updated 2026-09-13**: rebuilt with an Appearance / Habits / Account tab bar; Appearance holds the new Light/Dark/Match-system theme toggle (`ThemeContext`)
 - [x] Empty states for every list view (consistent, plain-language copy: "No habits added yet," "Nothing captured yet," "No active projects," "No results found," etc.)
 - [ ] First-open/install flow guiding the user to add to home screen (needed for push notifications)
 
@@ -59,7 +59,9 @@ Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_
 - [ ] Notifications follow current timezone, not home timezone
 - [ ] Copy option on captures/notes
 - [ ] Session stays signed in (no aggressive timeout)
-- [ ] Dark mode designed in from the start (not bolted on later)
+- [x] Dark mode designed in from the start (not bolted on later) — **2026-09-13**: real Light/Dark/Match-system toggle added in Settings (`src/state/ThemeContext.tsx`), on top of the existing system-only dark tokens; a pre-paint boot script in `index.html` avoids a flash on load
+- [x] Form fields visibly read as interactive/typeable at rest, not just on focus — **2026-09-14**: added `--field-fill`/`--field-border` tokens and a shared `.field-input` class (`src/index.css`), applied across Capture, Project detail, Guides, Habits, Settings, and the top-strip search bar
+- [ ] Add a `:focus-visible` outline on form fields for keyboard-only users, beyond the border-color-only focus state — flagged 2026-09-14 during the form-field-visibility pass, not yet built
 
 ## 5. Linked-Out Apps (not built in)
 

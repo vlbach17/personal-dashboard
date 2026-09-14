@@ -36,6 +36,8 @@
   --chrome-wash-bottom: linear-gradient(rgba(46, 58, 52, 0), rgba(46, 58, 52, 0.07));
   --project-rule-inactive: rgba(46, 58, 52, 0.2);
   --unchecked-icon: #7f8a83;
+  --field-fill: #f3ecec;
+  --field-border: rgba(46, 58, 52, 0.25);
   --ground-dye: radial-gradient(320px 220px at 8% 6%, rgba(255, 248, 240, 0.4), transparent 70%),
     radial-gradient(380px 300px at 96% 24%, rgba(226, 206, 212, 0.34), transparent 68%),
     radial-gradient(420px 280px at 20% 66%, rgba(238, 228, 216, 0.32), transparent 70%),
@@ -73,6 +75,8 @@
     --chrome-wash-bottom: linear-gradient(rgba(239, 233, 234, 0), rgba(239, 233, 234, 0.07));
     --project-rule-inactive: rgba(239, 233, 234, 0.18);
     --unchecked-icon: #7e8b83;
+    --field-fill: #333f30;
+    --field-border: rgba(239, 233, 234, 0.28);
     --ground-dye: radial-gradient(340px 240px at 10% 6%, rgba(255, 122, 26, 0.09), transparent 68%),
       radial-gradient(380px 300px at 94% 28%, rgba(74, 92, 80, 0.35), transparent 70%),
       radial-gradient(400px 300px at 22% 72%, rgba(58, 68, 58, 0.35), transparent 72%);
@@ -102,6 +106,8 @@
   --chrome-wash-bottom: linear-gradient(rgba(239, 233, 234, 0), rgba(239, 233, 234, 0.07));
   --project-rule-inactive: rgba(239, 233, 234, 0.18);
   --unchecked-icon: #7e8b83;
+  --field-fill: #333f30;
+  --field-border: rgba(239, 233, 234, 0.28);
   --ground-dye: radial-gradient(340px 240px at 10% 6%, rgba(255, 122, 26, 0.09), transparent 68%),
     radial-gradient(380px 300px at 94% 28%, rgba(74, 92, 80, 0.35), transparent 70%),
     radial-gradient(400px 300px at 22% 72%, rgba(58, 68, 58, 0.35), transparent 72%);
@@ -178,4 +184,26 @@ body {
 
 .chrome-wash-bottom {
   background-image: var(--chrome-wash-bottom);
+}
+
+/* Typing surfaces: a paper-bright fill lifts every text input/textarea off
+   the halftone ground so it reads as interactive at rest, not just on focus.
+   Border stays a flat rule (no radius/shadow) per Style Guide 04; only its
+   color changes on focus, so nothing shifts. */
+.field-input {
+  background-color: var(--field-fill);
+  border: 0;
+  border-bottom: 1.5px solid var(--field-border);
+  padding: 0.5rem 0.75rem;
+  transition: border-color 150ms ease;
+}
+
+.field-input:focus,
+.field-input:focus-within {
+  border-bottom-color: var(--accent-text);
+  outline: none;
+}
+
+.field-input::placeholder {
+  color: var(--label);
 }

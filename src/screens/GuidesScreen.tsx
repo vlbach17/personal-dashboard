@@ -1,6 +1,12 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { PencilSimple, Plus, Trash, X } from "@phosphor-icons/react";
+import {
+  PencilSimpleIcon,
+  PlusCircleIcon,
+  TrashSimpleIcon,
+  ProhibitIcon,
+  FloppyDiskIcon,
+} from "@phosphor-icons/react";
 import { useGuides } from "../state/GuidesContext";
 import type { Guide } from "../types/guide";
 
@@ -99,9 +105,10 @@ export function GuidesScreen() {
                   deleteGuide(guide.id);
                   cancelEdit();
                 }}
+                aria-label="Delete guide"
                 className="mt-2 flex items-center gap-1.5 font-mono text-xs text-accent-text"
               >
-                <Trash size={14} /> Delete
+                <TrashSimpleIcon size={22} weight="duotone" />
               </button>
             </li>
           ) : (
@@ -118,7 +125,7 @@ export function GuidesScreen() {
                 aria-label={`Edit ${guide.title}`}
                 className="shrink-0 text-ink"
               >
-                <PencilSimple size={18} />
+                <PencilSimpleIcon size={22} weight="duotone" />
               </button>
             </li>
           ),
@@ -137,10 +144,10 @@ export function GuidesScreen() {
             setEditingId(null);
             setDraft(EMPTY_DRAFT);
           }}
+          aria-label="Add guide"
           className="flex min-h-12 items-center gap-3.5 border-b border-hairline py-3.5 text-left"
         >
-          <Plus size={17} weight="bold" className="text-accent" />
-          <span className="text-[18px] leading-[23px] text-ink">Add guide</span>
+          <PlusCircleIcon size={22} weight="fill" className="text-accent" />
         </button>
       )}
     </div>
@@ -168,28 +175,38 @@ function GuideEditForm({
         value={draft.title}
         onChange={(event) => onChange({ ...draft, title: event.target.value })}
         placeholder="Guide title"
-        className="border-b border-hairline bg-transparent py-1 text-[18px] text-ink focus:border-ink focus:outline-none"
+        className="field-input w-full text-[18px] text-ink"
       />
       <input
         type="text"
         value={draft.category}
         onChange={(event) => onChange({ ...draft, category: event.target.value })}
         placeholder="Category"
-        className="border-b border-hairline bg-transparent py-1 font-mono text-xs text-label focus:border-ink focus:outline-none"
+        className="field-input w-full font-mono text-xs text-label"
       />
       <textarea
         value={draft.body}
         onChange={(event) => onChange({ ...draft, body: event.target.value })}
         placeholder="Guide content"
         rows={3}
-        className="w-full resize-none border-b border-hairline bg-transparent py-1 text-[15px] leading-[23px] text-body focus:border-ink focus:outline-none"
+        className="field-input w-full resize-none text-[15px] leading-[23px] text-body"
       />
       <div className="flex items-center gap-4">
-        <button type="button" onClick={onSave} className="font-mono text-xs text-accent-text">
-          {isNew ? "Add" : "Save"}
+        <button
+          type="button"
+          onClick={onSave}
+          aria-label={isNew ? "Add guide" : "Save guide"}
+          className="font-mono text-xs text-accent-text"
+        >
+          {isNew ? <PlusCircleIcon size={22} weight="fill" /> : <FloppyDiskIcon size={22} weight="duotone" />}
         </button>
-        <button type="button" onClick={onCancel} className="flex items-center gap-1 font-mono text-xs text-label">
-          <X size={12} /> Cancel
+        <button
+          type="button"
+          onClick={onCancel}
+          aria-label="Cancel"
+          className="flex items-center gap-1 font-mono text-xs text-label"
+        >
+          <ProhibitIcon size={22} weight="duotone" />
         </button>
       </div>
     </div>

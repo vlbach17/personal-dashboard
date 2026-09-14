@@ -1,12 +1,12 @@
-import { BookOpenText, FolderSimple, House, ListChecks, NotePencil } from "@phosphor-icons/react";
+import { BookOpenTextIcon, FolderSimpleIcon, HouseIcon, ListChecksIcon, NotePencilIcon } from "@phosphor-icons/react";
 import { NavLink } from "react-router-dom";
 
 const TABS = [
-  { to: "/", label: "Home", icon: House, end: true },
-  { to: "/habits", label: "Habits", icon: ListChecks },
-  { to: "/capture", label: "Capture", icon: NotePencil },
-  { to: "/projects", label: "Projects", icon: FolderSimple },
-  { to: "/guides", label: "Guides", icon: BookOpenText },
+  { to: "/", label: "Home", icon: HouseIcon, end: true },
+  { to: "/habits", label: "Habits", icon: ListChecksIcon },
+  { to: "/capture", label: "Capture", icon: NotePencilIcon },
+  { to: "/projects", label: "Projects", icon: FolderSimpleIcon },
+  { to: "/guides", label: "Guides", icon: BookOpenTextIcon },
 ];
 
 /**
@@ -33,7 +33,7 @@ export function BottomNav() {
           title={label}
           className={({ isActive }) => (isActive ? "text-accent" : "text-ink")}
         >
-          {({ isActive }) => <Icon size={23} weight={isActive ? "fill" : "regular"} />}
+          {({ isActive }) => <Icon size={22} weight={isActive ? "fill" : "regular"} />}
         </NavLink>
       ))}
     </nav>

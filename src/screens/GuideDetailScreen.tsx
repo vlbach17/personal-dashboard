@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft } from "@phosphor-icons/react";
+import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useGuides } from "../state/GuidesContext";
 
 /** Long-reading surface -- rendered on Ground variant B (halftone over dye) via AppShell's route match. */
@@ -11,8 +11,13 @@ export function GuideDetailScreen() {
   if (!guide) {
     return (
       <div className="flex flex-1 flex-col px-[26px] pt-[26px]">
-        <Link to="/guides" className="flex w-fit items-center gap-1.5 font-mono text-xs text-label">
-          <ArrowLeft size={14} /> Guides
+        <Link
+          to="/guides"
+          aria-label="Back to Guides"
+          title="Guides"
+          className="flex w-fit items-center gap-1.5 font-mono text-xs text-label"
+        >
+          <ArrowLeftIcon size={22} weight="duotone" />
         </Link>
         <p className="mt-[34px] text-[18px] text-body">This guide no longer exists.</p>
       </div>
@@ -21,8 +26,13 @@ export function GuideDetailScreen() {
 
   return (
     <div className="flex flex-1 flex-col px-[26px] pt-[26px]">
-      <Link to="/guides" className="flex w-fit items-center gap-1.5 font-mono text-xs text-label">
-        <ArrowLeft size={14} /> Guides
+      <Link
+        to="/guides"
+        aria-label="Back to Guides"
+        title="Guides"
+        className="flex w-fit items-center gap-1.5 font-mono text-xs text-label"
+      >
+        <ArrowLeftIcon size={22} weight="duotone" />
       </Link>
       <div className="mt-[18px] font-mono text-xs tracking-[0.1em] text-label uppercase">
         {guide.category} · {guide.updatedLabel}

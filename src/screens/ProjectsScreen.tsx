@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { PencilSimple, Plus, Trash, X } from "@phosphor-icons/react";
+import {
+  PencilSimpleIcon,
+  PlusCircleIcon,
+  TrashSimpleIcon,
+  ProhibitIcon,
+  FloppyDiskIcon,
+} from "@phosphor-icons/react";
 import { useProjects } from "../state/ProjectsContext";
 import type { Project } from "../types/project";
 
@@ -98,7 +104,7 @@ export function ProjectsScreen() {
                       aria-label={`Edit ${project.name}`}
                       className="shrink-0 text-ink"
                     >
-                      <PencilSimple size={16} />
+                      <PencilSimpleIcon size={22} weight="duotone" />
                     </button>
                   </div>
                   <p className="text-[15px] leading-[23px] text-pretty text-body">
@@ -113,9 +119,10 @@ export function ProjectsScreen() {
                     deleteProject(project.id);
                     cancelEdit();
                   }}
+                  aria-label="Delete project"
                   className="flex items-center gap-1.5 font-mono text-xs text-accent-text"
                 >
-                  <Trash size={14} /> Delete
+                  <TrashSimpleIcon size={22} weight="duotone" />
                 </button>
               )}
             </li>
@@ -135,10 +142,10 @@ export function ProjectsScreen() {
             setEditingId(null);
             setDraft({ name: "", status: tab });
           }}
+          aria-label="Add project"
           className="mt-[18px] flex min-h-12 items-center gap-3.5 text-left"
         >
-          <Plus size={17} weight="bold" className="text-accent" />
-          <span className="text-[18px] leading-[23px] text-ink">Add project</span>
+          <PlusCircleIcon size={22} weight="fill" className="text-accent" />
         </button>
       )}
     </div>
@@ -183,11 +190,21 @@ function ProjectEditForm({
         ))}
       </div>
       <div className="flex items-center gap-4">
-        <button type="button" onClick={onSave} className="font-mono text-xs text-accent-text">
-          {isNew ? "Add" : "Save"}
+        <button
+          type="button"
+          onClick={onSave}
+          aria-label={isNew ? "Add project" : "Save project"}
+          className="font-mono text-xs text-accent-text"
+        >
+          {isNew ? <PlusCircleIcon size={22} weight="fill" /> : <FloppyDiskIcon size={22} weight="duotone" />}
         </button>
-        <button type="button" onClick={onCancel} className="flex items-center gap-1 font-mono text-xs text-label">
-          <X size={12} /> Cancel
+        <button
+          type="button"
+          onClick={onCancel}
+          aria-label="Cancel"
+          className="flex items-center gap-1 font-mono text-xs text-label"
+        >
+          <ProhibitIcon size={22} weight="duotone" />
         </button>
       </div>
     </div>

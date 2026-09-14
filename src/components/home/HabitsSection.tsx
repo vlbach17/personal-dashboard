@@ -1,4 +1,4 @@
-import { Check, Square } from "@phosphor-icons/react";
+import { CheckIcon, SquareIcon } from "@phosphor-icons/react";
 import type { Habit } from "../../types/habit";
 import { SectionLabel } from "../layout/SectionLabel";
 
@@ -25,9 +25,9 @@ export function HabitsSection({ habits, onToggle }: HabitsSectionProps) {
               className="flex min-h-12 w-full items-center gap-3.5 py-3.5 text-left"
             >
               {habit.doneToday ? (
-                <Check size={17} weight="bold" className="shrink-0 text-accent" />
+                <CheckIcon size={22} weight="bold" className="shrink-0 text-accent" />
               ) : (
-                <Square size={17} className="shrink-0" style={{ color: "var(--unchecked-icon)" }} />
+                <SquareIcon size={22} className="shrink-0" style={{ color: "var(--unchecked-icon)" }} />
               )}
               <span
                 className={`text-[18px] leading-[23px] ${

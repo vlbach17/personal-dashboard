@@ -1,4 +1,4 @@
-import { Plus } from "@phosphor-icons/react";
+import { PlusIcon } from "@phosphor-icons/react";
 import { Link, useLocation } from "react-router-dom";
 
 /**
@@ -20,7 +20,7 @@ export function QuickCaptureFab() {
         backgroundImage: "linear-gradient(#FF8F3C, #F26A08)",
       }}
     >
-      <Plus size={21} weight="bold" className="text-ink" />
+      <PlusIcon size={22} weight="bold" className="text-ink" />
     </Link>
   );
 }

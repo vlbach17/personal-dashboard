@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Check, CloudArrowUp, Desktop, Moon, SignOut, Sun } from "@phosphor-icons/react";
+import {
+  CheckIcon,
+  CloudArrowUpIcon,
+  DesktopIcon,
+  MoonIcon,
+  SignOutIcon,
+  SunIcon,
+} from "@phosphor-icons/react";
 import { useHabits } from "../state/HabitsContext";
 import { useTheme, type Theme } from "../state/ThemeContext";
 import { SectionLabel } from "../components/layout/SectionLabel";
@@ -12,10 +19,10 @@ const TABS: { value: Tab; label: string }[] = [
   { value: "account", label: "Account" },
 ];
 
-const THEME_OPTIONS: { value: Theme; label: string; icon: typeof Sun }[] = [
-  { value: "light", label: "Light", icon: Sun },
-  { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "Match system", icon: Desktop },
+const THEME_OPTIONS: { value: Theme; label: string; icon: typeof SunIcon }[] = [
+  { value: "light", label: "Light", icon: SunIcon },
+  { value: "dark", label: "Dark", icon: MoonIcon },
+  { value: "system", label: "Match system", icon: DesktopIcon },
 ];
 
 /**
@@ -71,9 +78,9 @@ export function SettingsScreen() {
                     aria-pressed={selected}
                     className="flex min-h-12 w-full items-center gap-3.5 py-3.5 text-left"
                   >
-                    <Icon size={18} weight={selected ? "bold" : "regular"} className="shrink-0 text-ink" />
+                    <Icon size={22} weight={selected ? "bold" : "regular"} className="shrink-0 text-ink" />
                     <span className="flex-1 text-[18px] leading-[23px] text-ink">{label}</span>
-                    {selected && <Check size={17} weight="bold" className="shrink-0 text-accent" />}
+                    {selected && <CheckIcon size={22} weight="bold" className="shrink-0 text-accent" />}
                   </button>
                 </li>
               );
@@ -102,7 +109,7 @@ export function SettingsScreen() {
                     value={habit.schedule}
                     onChange={(event) => updateHabit(habit.id, { schedule: event.target.value })}
                     aria-label={`Reminder time for ${habit.label}`}
-                    className="w-24 shrink-0 border-b border-hairline bg-transparent text-right font-mono text-xs text-data focus:border-ink focus:outline-none"
+                    className="field-input w-24 shrink-0 text-right font-mono text-xs text-data"
                   />
                 </li>
               ))}
@@ -119,7 +126,7 @@ export function SettingsScreen() {
           className="mt-[34px] pb-[34px]"
         >
           <button type="button" className="flex min-h-12 w-full items-center gap-3.5 border-b border-hairline py-3.5 text-left">
-            <SignOut size={18} className="shrink-0 text-ink" />
+            <SignOutIcon size={22} weight="duotone" className="shrink-0 text-ink" />
             <span className="flex-1 text-[18px] leading-[23px] text-ink">Log out</span>
           </button>
           <p className="pt-2 font-mono text-xs text-label">Not wired up yet — Cloudflare Access isn't connected.</p>
@@ -128,7 +135,7 @@ export function SettingsScreen() {
             type="button"
             className="mt-3.5 flex min-h-12 w-full items-center gap-3.5 border-b border-hairline py-3.5 text-left"
           >
-            <CloudArrowUp size={18} className="shrink-0 text-ink" />
+            <CloudArrowUpIcon size={22} weight="duotone" className="shrink-0 text-ink" />
             <span className="flex-1 text-[18px] leading-[23px] text-ink">Back up now</span>
           </button>
           <p className="pt-2 font-mono text-xs text-label">Not wired up yet — D1 isn't provisioned.</p>
