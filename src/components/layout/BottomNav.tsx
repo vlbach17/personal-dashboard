@@ -6,7 +6,7 @@ const TABS = [
   { to: "/habits", label: "Habits", icon: ListChecksIcon },
   { to: "/capture", label: "Capture", icon: NotePencilIcon },
   { to: "/projects", label: "Projects", icon: FolderSimpleIcon },
-  { to: "/guides", label: "Guides", icon: BookOpenTextIcon },
+  { to: "/notes", label: "Notes", icon: BookOpenTextIcon },
 ];
 
 /**

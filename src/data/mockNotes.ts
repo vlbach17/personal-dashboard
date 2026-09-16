@@ -1,12 +1,14 @@
-import type { Guide } from "../types/guide";
+import type { Note } from "../types/note";
 
-export const mockGuides: Guide[] = [
+export const mockNotes: Note[] = [
   {
     id: "alliance-events",
     title: "Alliance event rotation",
     category: "Events",
     updatedLabel: "3 days ago",
     body: "Alliance events rotate roughly weekly. Prioritize the ones that reward speedups and gems over pure resource crates — resources are easy to farm, time is not.",
+    linkedProjectId: null,
+    linkedHabitId: null,
   },
   {
     id: "hero-pairings",
@@ -14,6 +16,8 @@ export const mockGuides: Guide[] = [
     category: "Heroes",
     updatedLabel: "1 week ago",
     body: "Pair a high-defense tank hero with a rally-debuff support in the garrison lineup. Avoid stacking two rally leaders — their skills don't stack the way you'd expect.",
+    linkedProjectId: null,
+    linkedHabitId: null,
   },
   {
     id: "resource-tiles",
@@ -21,6 +25,8 @@ export const mockGuides: Guide[] = [
     category: "Map",
     updatedLabel: "2 weeks ago",
     body: "Tile color indicates output tier, not distance from your castle. A gold-tier tile three zones out often beats a bronze tile next door once transport time is accounted for.",
+    linkedProjectId: null,
+    linkedHabitId: null,
   },
   {
     id: "troop-training-order",
@@ -28,5 +34,25 @@ export const mockGuides: Guide[] = [
     category: "Strategy",
     updatedLabel: "3 weeks ago",
     body: "Infantry first for early defense, then split into cavalry once you have a garrison worth defending. Don't train archers until you have a specific counter-comp in mind.",
+    linkedProjectId: null,
+    linkedHabitId: null,
+  },
+  {
+    id: "design-token-reminder",
+    title: "Where the design tokens live",
+    category: "Personal Dashboard",
+    updatedLabel: "1 day ago",
+    body: "Color/type tokens are in src/index.css, not tailwind.config — the style guide is docs/brand/color_typography-design-style-guide_v1/README.md. Border-radius is 0 everywhere, no shadows: rules, not cards.",
+    linkedProjectId: "personal-dashboard",
+    linkedHabitId: null,
+  },
+  {
+    id: "gift-ideas",
+    title: "Gift ideas, running list",
+    category: "Personal",
+    updatedLabel: "5 days ago",
+    body: "Mom: the enamel mug set she pointed at twice. Dad: replacement laces for the hiking boots. Keep adding here instead of losing these in a text thread.",
+    linkedProjectId: null,
+    linkedHabitId: null,
   },
 ];

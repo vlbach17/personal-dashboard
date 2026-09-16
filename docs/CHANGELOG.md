@@ -66,3 +66,18 @@
 - Per the user's request, standardized every Phosphor icon's `size` prop to `22` across the app — previously sizes varied ad hoc from 12 to 23 depending on context (nav, add buttons, edit/delete, back arrows, checkmarks, search, etc.).
 - Changed all 39 `size={...}` occurrences across 11 files: `CaptureScreen.tsx`, `GuideDetailScreen.tsx`, `GuidesScreen.tsx`, `SettingsScreen.tsx`, `HabitsScreen.tsx`, `ProjectsScreen.tsx`, `ProjectDetailScreen.tsx`, `components/home/HabitsSection.tsx`, `components/layout/BottomNav.tsx`, `components/layout/TopStrip.tsx`, `components/layout/QuickCaptureFab.tsx`.
 - Verified with `npm run typecheck` — clean, no other changes needed.
+
+## 2026-09-15 session summary
+
+- Relabeled Guides as Notes per the user's request: general-purpose notes now live here (Kingshot markdown guides included but not exclusive), with a new optional, mutually-exclusive link to one existing project or habit.
+- Renamed `src/types/guide.ts` → `types/note.ts`, `state/GuidesContext.tsx` → `state/NotesContext.tsx` (added `setNoteLink`), `screens/GuidesScreen.tsx` → `screens/NotesScreen.tsx` (new link-to-project/habit selects in the edit form), `screens/GuideDetailScreen.tsx` → `screens/NoteDetailScreen.tsx` (shows "Linked to {name}"), and `data/mockGuides.ts` → `data/mockNotes.ts` (kept all 4 Kingshot entries, added a note linked to the Personal Dashboard project and a plain "Gift ideas" note).
+- Updated `BottomNav.tsx` (`/guides` → `/notes`, label "Notes"), `TopStrip.tsx` search aria-label, and `App.tsx` routes/providers; added a new "Related notes" section to `ProjectDetailScreen.tsx`, shown only when a project has linked notes.
+- Caught and fixed a real bug during a final sweep: `AppShell.tsx`'s long-reading ground-variant route matcher still pointed at `/guides/:id`, which would have silently broken the halftone-dye background on note detail pages.
+- Updated `CLAUDE.md`, `PRODUCT.md`, and `docs/TASK_LIST.md` to replace Guides references with Notes, documenting the new linking capability and the accepted asymmetry that Habits has no detail screen (so habit-linked notes don't get a reverse listing).
+- Verified with `npm run typecheck`, `npm run lint`, `npm run build`, and a live check in Chrome (note list, add-note with a habit link, note detail's "Linked to" line, the project's "Related notes" section, and link-icon routing to `/habits`) — all clean. Nothing was committed.
+
+### Later session (commit pending work; paused on the Notes rename)
+
+- Committed and pushed the form-field-visibility and icon-size-normalization changes (15 files, already sitting in the working tree from the prior session) as commit `0cc26f0` on `master`, now live on `origin/master`.
+- Resumed later the same day and ran `git status`; found the Guides→Notes rename described above still fully uncommitted (5 files deleted, 5 new untracked, plus `CLAUDE.md`/`PRODUCT.md`/`docs/TASK_LIST.md`/`App.tsx`/`AppShell.tsx`/`BottomNav.tsx`/`TopStrip.tsx`/`ProjectDetailScreen.tsx` modified).
+- Paused instead of staging/committing it, since the rename wasn't part of what this session was asked to commit — asked the user to confirm it's finished before touching it. No source files were created, edited, or deleted this session; the only actions taken were `git add`/`commit`/`push`.

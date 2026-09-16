@@ -15,7 +15,7 @@ export function TopStrip() {
         <input
           type="search"
           placeholder="search everything"
-          aria-label="Search habits, captures, projects and guides"
+          aria-label="Search habits, captures, projects and notes"
           className="min-w-0 flex-1 border-none bg-transparent p-0 font-mono text-[13px] text-label placeholder:text-label focus:outline-none"
         />
       </div>

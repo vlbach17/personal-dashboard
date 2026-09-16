@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repo. Keep this file short and cur
 
 ## Project Overview
 
-A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, iPhone, iPad), for daily/weekly use. Combines built-in ADHD-friendly tools (habit tracker, quick capture, project tracker, guide database) with quick links to other apps already in use (Markdown Press, DSM artifact tools, Bettabase).
+A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, iPhone, iPad), for daily/weekly use. Combines built-in ADHD-friendly tools (habit tracker, quick capture, project tracker, notes) with quick links to other apps already in use (Markdown Press, DSM artifact tools, Bettabase).
 
 ## Tech Stack
 
@@ -50,16 +50,16 @@ A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, i
 - Habits (list + add + per-habit settings incl. reminder time)
 - Capture (input + reverse-chron list of past captures; convert-to-project action)
 - Projects (Active / Someday tabs; detail view with running "where I left off" log)
-- Guides (grid/list + add + filter/sort + detail/read view)
+- Notes (list + add + filter/sort + detail/read view; general notes, Kingshot guides included but not exclusive, optional link to a project or habit)
 - Settings/Account (manage all habit reminder times in one place, log out, manual backup/export trigger)
 - Empty states and first-open/install flow
 
 ## Navigation
 
-- **Superseded 2026-09-12**: primary navigation is a persistent bottom tab bar (Home, Habits, Capture, Projects, Guides), not a hamburger + slide-out sidebar. Same bar at every width — no distinct desktop composition yet.
+- **Superseded 2026-09-12**: primary navigation is a persistent bottom tab bar (Home, Habits, Capture, Projects, Notes), not a hamburger + slide-out sidebar. Same bar at every width — no distinct desktop composition yet. **Relabeled 2026-09-14**: the Guides tab is now Notes (`/notes`) — see Key Behavior Decisions below.
 - Settings sits behind a gear icon in the top strip instead, since it isn't a daily-use screen.
 - The quick-capture control is a separate, always-floating button reachable from every screen except Capture itself (per the "persistent floating quick-capture control" decision below).
-- Search bar across all content (habits, captures, projects, guides) — one shared bar, not per-section. Built and styled in the top strip; not wired to results yet.
+- Search bar across all content (habits, captures, projects, notes) — one shared bar, not per-section. Built and styled in the top strip; not wired to results yet.
 
 ## Key Behavior Decisions
 
@@ -74,10 +74,10 @@ A personal dashboard, accessible on mobile, tablet, and desktop (Windows, Mac, i
 - **Capture → Project conversion:** includes smart duplicate/related-topic detection (auto-flagging likely matches) — a real feature to scope, not a trivial add.
 - **Backups:** Cloudflare D1 backup/export enabled from day one.
 - **Offline:** not needed — always-online is fine.
-- **Edit/delete pattern:** edit icon, used consistently across all lists (habits, captures, projects, guides).
+- **Edit/delete pattern:** edit icon, used consistently across all lists (habits, captures, projects, notes).
 - **Habits:** quiet reset on a miss, no streak-shaming/red flags.
 - **Capture:** one open input, no forced categories, as fast as a sticky note.
-- **Guides:** stored directly in D1 (not synced from files), simple in-app editor, filter/sort by category or tag.
+- **Notes:** relabeled from Guides 2026-09-14 — general-purpose notes stored directly in D1 (not synced from files), simple in-app editor, filter/sort by category or tag. Kingshot markdown guides live here but aren't the only content; a note can optionally link to one existing project or habit (`Note.linkedProjectId` / `linkedHabitId`, mutually exclusive). Project detail shows a reverse "Related notes" section for notes linked to it; Habits has no per-habit detail screen, so habit-linked notes don't get a reverse listing yet.
 - **Projects:** Active vs. Someday split, no pressure/due dates on Someday; "where I left off" is a running log per project (not overwritten each time).
 
 ## Database

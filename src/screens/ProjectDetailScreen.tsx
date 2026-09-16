@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeftIcon, FolderSimpleIcon, PlusCircleIcon } from "@phosphor-icons/react";
 import { useProjects } from "../state/ProjectsContext";
 import { useCaptures } from "../state/CapturesContext";
+import { useNotes } from "../state/NotesContext";
 import { SectionLabel } from "../components/layout/SectionLabel";
 
 interface HistoryItem {
@@ -17,6 +18,7 @@ export function ProjectDetailScreen() {
   const { id } = useParams();
   const { projects, appendLogEntry } = useProjects();
   const { captures } = useCaptures();
+  const { notes } = useNotes();
   const [note, setNote] = useState("");
   const project = projects.find((p) => p.id === id);
 
@@ -52,6 +54,7 @@ export function ProjectDetailScreen() {
     origin: "log",
   }));
   const historyNewestFirst = [...originCaptures, ...logHistory].reverse();
+  const relatedNotes = notes.filter((n) => n.linkedProjectId === project.id);
 
   function submitEntry() {
     if (!project) return;
@@ -122,6 +125,23 @@ export function ProjectDetailScreen() {
             </li>
           ))}
         </ul>
+      )}
+
+      {relatedNotes.length > 0 && (
+        <>
+          <div className="mt-[34px]">
+            <SectionLabel>Related notes</SectionLabel>
+          </div>
+          <ul className="mt-3.5">
+            {relatedNotes.map((relatedNote) => (
+              <li key={relatedNote.id} className="border-b border-hairline py-3.5">
+                <Link to={`/notes/${relatedNote.id}`} className="text-[15px] leading-[23px] text-accent-text">
+                  {relatedNote.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );

@@ -5,12 +5,12 @@ import { HabitsScreen } from "./screens/HabitsScreen";
 import { CaptureScreen } from "./screens/CaptureScreen";
 import { ProjectsScreen } from "./screens/ProjectsScreen";
 import { ProjectDetailScreen } from "./screens/ProjectDetailScreen";
-import { GuidesScreen } from "./screens/GuidesScreen";
-import { GuideDetailScreen } from "./screens/GuideDetailScreen";
+import { NotesScreen } from "./screens/NotesScreen";
+import { NoteDetailScreen } from "./screens/NoteDetailScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 import { HabitsProvider } from "./state/HabitsContext";
 import { ProjectsProvider } from "./state/ProjectsContext";
-import { GuidesProvider } from "./state/GuidesContext";
+import { NotesProvider } from "./state/NotesContext";
 import { CapturesProvider } from "./state/CapturesContext";
 import { ThemeProvider } from "./state/ThemeContext";
 
@@ -20,7 +20,7 @@ function App() {
       <HabitsProvider>
         <ProjectsProvider>
           <CapturesProvider>
-            <GuidesProvider>
+            <NotesProvider>
               <BrowserRouter>
                 <AppShell>
                   <Routes>
@@ -29,13 +29,13 @@ function App() {
                     <Route path="/capture" element={<CaptureScreen />} />
                     <Route path="/projects" element={<ProjectsScreen />} />
                     <Route path="/projects/:id" element={<ProjectDetailScreen />} />
-                    <Route path="/guides" element={<GuidesScreen />} />
-                    <Route path="/guides/:id" element={<GuideDetailScreen />} />
+                    <Route path="/notes" element={<NotesScreen />} />
+                    <Route path="/notes/:id" element={<NoteDetailScreen />} />
                     <Route path="/settings" element={<SettingsScreen />} />
                   </Routes>
                 </AppShell>
               </BrowserRouter>
-            </GuidesProvider>
+            </NotesProvider>
           </CapturesProvider>
         </ProjectsProvider>
       </HabitsProvider>

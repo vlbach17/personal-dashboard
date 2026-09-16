@@ -36,7 +36,8 @@ Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_
 - [x] Habits — list, inline add/edit/delete, schedule text per habit (shares `HabitsContext` with Home and Settings). No reminder *scheduling* (push/cron) is wired — that's section 6.
 - [x] Capture — open input, reverse-chron list, copy action, convert-to-project. **Updated 2026-09-13**: conversion now actually creates and links a real project via the new `CapturesContext` (`Capture.projectId`), not just a flag — smart duplicate/related-topic detection is still unscoped, see section 4
 - [x] Projects — Active / Someday tabs, inline add/edit/delete, detail view at `/projects/:id` with the full running "where I left off" log and an append-only entry form (shares `ProjectsContext` with Home). **Updated 2026-09-13**: detail view now also shows a "Created {date}" line and merges the log with any originating capture into one reverse-chron History section (tagged "from capture")
-- [x] Guides — list (not a card grid — see Navigation note below) with category filter + newest/A–Z sort, inline add/edit/delete, detail/read view at `/guides/:id` (shares `GuidesContext`)
+- [x] Notes — list (not a card grid — see Navigation note below) with category filter + newest/A–Z sort, inline add/edit/delete, detail/read view at `/notes/:id` (shares `NotesContext`). **Relabeled 2026-09-14** from Guides — general-purpose notes now, Kingshot guides included but not exclusive; a note can optionally link to one existing project or habit, and Project detail shows a reverse "Related notes" section.
+- [ ] Confirm the Guides→Notes rename (code + `CLAUDE.md`/`PRODUCT.md` updates) is finished, then commit and push it — still uncommitted in the working tree as of the 2026-09-15 session; a resumed session found it mid-tree and paused rather than assume it was done
 - [x] Settings/Account — habit reminder *times* editable in place (shares `HabitsContext`); log out and manual backup/export are visually built but intentionally inert (Cloudflare Access and D1 aren't provisioned — see section 1). **Updated 2026-09-13**: rebuilt with an Appearance / Habits / Account tab bar; Appearance holds the new Light/Dark/Match-system theme toggle (`ThemeContext`)
 - [x] Empty states for every list view (consistent, plain-language copy: "No habits added yet," "Nothing captured yet," "No active projects," "No results found," etc.)
 - [ ] First-open/install flow guiding the user to add to home screen (needed for push notifications)
@@ -45,7 +46,7 @@ Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_
 
 - [x] **Superseded 2026-09-12**: primary navigation is now a persistent bottom tab bar (`src/components/layout/BottomNav.tsx` — Home/Habits/Capture/Projects/Guides), not a hamburger + slide-out sidebar. Settings moved to a gear icon in the top strip since it isn't a daily-use screen. The quick-capture control is a separate, always-floating button (`QuickCaptureFab.tsx`) reachable from every screen except Capture itself, per CLAUDE.md. Same bar at every width — no distinct desktop composition yet (still ask before designing one; see below).
 - [ ] Desktop composition (per reference wireframe photo) — the photo still isn't in this repo; content is full-bleed/fluid at wide viewports for now. Ask before designing a distinct desktop layout.
-- [ ] Shared search bar across habits, captures, projects, guides — input is built and styled in the top strip but not wired to any results yet; results UI isn't designed
+- [ ] Shared search bar across habits, captures, projects, notes — input is built and styled in the top strip but not wired to any results yet; results UI isn't designed
 - [ ] Search empty state ("No results found") — copy exists as a convention, not yet reachable from a real search
 
 ## 4. Feature Behavior
@@ -54,7 +55,7 @@ Status: the color/typography system was confirmed 2026-09-12 (`docs/brand/color_
 - [ ] Capture: fast single input, no forced categories
 - [ ] Capture → Project conversion with smart duplicate/related-topic detection
 - [ ] Project tracker: Active vs. Someday split, no due dates on Someday, running (not overwritten) "where I left off" log
-- [ ] Kingshot guide database: stored in D1, simple in-app editor, filter/sort by category or tag
+- [ ] Notes (was "Kingshot guide database"): stored in D1, simple in-app editor, filter/sort by category or tag, general-purpose content with optional project/habit link
 - [ ] Notification permission prompt triggered only on first habit reminder set (not first app open)
 - [ ] Notifications follow current timezone, not home timezone
 - [ ] Copy option on captures/notes

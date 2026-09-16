@@ -7,7 +7,7 @@ import { QuickCaptureFab } from "./QuickCaptureFab";
 
 /** Long-reading surfaces get the halftone-over-dye ground (Style Guide 01, variant B). */
 function isLongReadingRoute(pathname: string): boolean {
-  return /^\/projects\/[^/]+$/.test(pathname) || /^\/guides\/[^/]+$/.test(pathname);
+  return /^\/projects\/[^/]+$/.test(pathname) || /^\/notes\/[^/]+$/.test(pathname);
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
